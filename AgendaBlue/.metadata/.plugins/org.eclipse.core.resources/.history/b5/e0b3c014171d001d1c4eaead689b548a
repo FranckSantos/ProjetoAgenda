@@ -1,0 +1,84 @@
+package br.com.agenda.agenda.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.agenda.agenda.model.ContatoModel;
+import br.com.agenda.agenda.repository.ContatoRepository;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/contato")
+public class AgendaController {
+
+	private List<ContatoModel> listaContatos = new ArrayList<>();
+
+	@Autowired
+	private ContatoRepository contRepository;
+	
+	
+//	List All 
+	@GetMapping("/list")
+	public List<?> findAll(){
+		return contRepository.findAll();
+	}
+	
+	
+//	Find By Id 
+	//@GetMapping(value = "{/id}")
+	@GetMapping("/{id}")
+	public ResponseEntity<?> findById(@PathVariable Long id){
+		return contRepository.findById(id)
+				.map(record -> ResponseEntity.ok().body(record))
+				.orElse(ResponseEntity.notFound().build());
+	}
+	
+	
+//	Create 
+	@PostMapping
+	public ContatoModel create(@RequestBody ContatoModel contato){
+		return contRepository.save(contato);
+	}
+	
+	
+//	Update
+	//@PutMapping(value = "{/id}")
+	@PutMapping("/update/{id}")
+	public ResponseEntity<?> update(@PathVariable Long id, 
+			@RequestBody ContatoModel contato){
+		return contRepository.findById(id)
+				.map(record -> {
+					record.setNome(contato.getNome());
+					record.setEmail(contato.getEmail());
+					record.setTelefone(contato.getTelefone());
+					ContatoModel update = contRepository.save(record);
+					return ResponseEntity.ok().body(update);
+				}).orElse(ResponseEntity.notFound().build());
+	}
+	
+	
+	
+	//@DeleteMapping(path = {"{id}"})
+	//@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("/remover/{id}")
+	public ResponseEntity<?> delete(@PathVariable Long id){
+		return contRepository.findById(id)
+		.map(record -> {
+			contRepository.deleteById(id);
+			return ResponseEntity.ok().body("Deletado com Sucesso!");
+		}).orElse(((BodyBuilder) ResponseEntity.notFound()).body("Erro ao deletar contato"));
+	}
+	
+}

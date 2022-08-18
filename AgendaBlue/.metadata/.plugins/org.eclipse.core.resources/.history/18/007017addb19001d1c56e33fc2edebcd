@@ -1,0 +1,9 @@
+package br.com.agenda.agenda.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import br.com.agenda.agenda.model.ContatoModel;
+
+public interface ContatoRepository extends JpaRepository<ContatoModel, Long >{
+
+}

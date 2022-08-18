@@ -1,0 +1,30 @@
+package br.com.agenda.agenda.repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import br.com.agenda.agenda.model.ContatoModel;
+
+@Repository
+public interface ContatoRepository extends JpaRepository<ContatoModel, Long >{
+	public List<ContatoModel> listaContatos = new ArrayList<>();
+	
+	
+	public List<ContatoModel> findByNome(String nome);
+	//public List<ContatoModel> findByid(Long id);
+	public void deleteById(Long id);
+	
+//	 default void updateContato(Long id, ContatoModel contato) {
+//		for (int i = 0; i < listaContatos.size(); i++) {
+//			ContatoModel x = listaContatos.get(i);
+//			if(x.getId().equals(id)) {
+//				listaContatos.set(i, contato);
+//				return;
+//			}
+//		}
+	//}
+		
+}

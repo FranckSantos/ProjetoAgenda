@@ -1,0 +1,25 @@
+
+<nav  class="navbar" style="background-color: #3879db;" >
+    
+    <!--menu responsivo mobile-->
+    <span id="menu-mobile" class="navbar-toggle">
+        <mat-icon >menu</mat-icon>
+     </span>
+    
+    <!--menu para desktop-->
+    <span class="logo" ><img src="../../../assets/img/logo4.png"></span>
+    
+    <ul id="menu-desktop" class="main-nav" >
+        <li >
+            <a [routerLink]="['/cadastro-contatos']" routerLinkActive="active" class="nav-links">Cadastrar</a>
+        </li>
+        
+        <li>
+            <a [routerLink]="['/lista-contatos']" routerLinkActive="active" class="nav-links">Contatos</a>
+        </li>
+         
+    </ul>
+
+</nav>
+
+

@@ -1,0 +1,44 @@
+
+<div class="container">
+  <div class="container_title">
+    <h1>LISTA DE CONTATOS</h1>
+  </div>
+<table mat-table [dataSource]="contactsList" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.id}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="nome">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.nome}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.email}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="telefone" >
+      <th mat-header-cell *matHeaderCellDef> Telefone </th>
+      <td mat-cell *matCellDef="let contact"> {{contact.telefone}} </td>
+    </ng-container>
+
+    <ng-container class="act" matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let contact">
+            <button mat-stroked-button color="primary">
+                <mat-icon (click)="editContato(contact)">edit</mat-icon>
+            </button>
+            <button mat-stroked-button color="primary">
+                <mat-icon (click)="delContato(contact)">delete</mat-icon>
+            </button>
+        </td>
+      </ng-container>
+ 
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+</div>
